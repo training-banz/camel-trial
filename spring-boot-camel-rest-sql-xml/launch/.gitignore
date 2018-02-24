@@ -1,0 +1,5 @@
+/(参考) ビルドのみ テストあり(clean install).launch
+/(参考) ビルドのみ テストなし (clean install) (skiptest).launch
+/1 ローカル実行 (springboot run).launch
+/2 Openshift onlineで実行 (clean install fabric8_deploy) online.launch
+/3 Openshift onlineでの実行を停止 (fabric8_undeploy) online.launch
