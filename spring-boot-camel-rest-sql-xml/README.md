@@ -106,6 +106,6 @@ You can find more details about running this [quickstart](http://fabric8.io/guid
 
 ### see also
 
-doc/ReadMe_App.md
-doc/ReadMe_App.md
-
+* doc/ReadMe_App.md
+* doc/ReadMe_SwaggerUI.md
+* https://github.com/fabric8-quickstarts/spring-boot-camel-rest-sql
