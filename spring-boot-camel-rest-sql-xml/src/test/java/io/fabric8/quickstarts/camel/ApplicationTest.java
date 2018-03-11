@@ -57,8 +57,6 @@ public class ApplicationTest {
         assertThat(notify.matches(10, TimeUnit.SECONDS)).isTrue();
 
         // Then call the REST API
-//        ResponseEntity<Order> orderResponse = restTemplate.getForEntity("/camel-rest-sql/books/order/1", Order.class);
-        //todo 元に戻す
         ResponseEntity<Order> orderResponse = restTemplate.getForEntity("/camel-rest-sql-xml/books/order/1", Order.class);
         assertThat(orderResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         Order order = orderResponse.getBody();
@@ -69,7 +67,6 @@ public class ApplicationTest {
         assertThat(order.isProcessed()).isTrue();
 
         ResponseEntity<List<Book>> booksResponse = restTemplate.exchange("/camel-rest-sql-xml/books",
-//        Object booksResponse = restTemplate.exchange("/camel-rest-sql-xml/books",
             HttpMethod.GET, null, new ParameterizedTypeReference<List<Book>>(){});
         assertThat(booksResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         List<Book> books = booksResponse.getBody();
