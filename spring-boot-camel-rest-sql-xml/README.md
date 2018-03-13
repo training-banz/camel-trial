@@ -109,3 +109,6 @@ You can find more details about running this [quickstart](http://fabric8.io/guid
 * doc/ReadMe_App.md
 * doc/ReadMe_SwaggerUI.md
 * https://github.com/fabric8-quickstarts/spring-boot-camel-rest-sql
+
+* https://manage.openshift.com/
+* http://spring-boot-camel-rest-sql-xml-akohno-test1.7e14.starter-us-west-2.openshiftapps.com/camel-rest-sql-xml/books
