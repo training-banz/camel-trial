@@ -1,0 +1,25 @@
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - 
+          resources:
+            requests:
+              cpu: "0.2"
+              #spring-boot-camel-rest-sql-1-zx8st   0/1       OOMKilled 256->384
+              memory: 256Mi
+            limits:
+              cpu: "1.0"
+              memory: 384Mi
+          env:
+          - name: SPRING_APPLICATION_JSON
+            value: '{"server":{"tomcat":{"max-threads":1}}}'
+          - name: MYSQL_SERVICE_NAME
+            value: mysql
+          - name: MYSQL_SERVICE_DATABASE
+            value: sampledb
+          - name: MYSQL_SERVICE_USERNAME
+            value: ${mysql-service-username}
+          - name: MYSQL_SERVICE_PASSWORD
+            value: ${mysql-service-password}

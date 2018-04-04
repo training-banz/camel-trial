@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <!-- You could also define a traditional camel context here -->
+    <camelContext id="camelContext-70cbe5e5-2bd2-42f1-a930-39ffdff57ee5" xmlns="http://camel.apache.org/schema/spring">
+        <!-- configure rest-dsl to use jetty component and run on port 10080 -->
+        <restConfiguration apiContextPath="/api-doc" bindingMode="json"
+            component="servlet" contextPath="/camel-rest-sql-xml"
+            enableCORS="true" host="" port="8080">
+            <!-- 127.0.0.1, spring-boot-camel-rest-sql-xml-akohno-test1.7e14.starter-us-west-2.openshiftapps.com -->
+            <!-- 8080->80 -->
+            <!-- add start compatibility {swagger-ui:3.1.4, api:1.0} {swagger-ui:3.10.0, api:2.0} -->
+            <apiProperty key="api.version" value="2.0"/>
+            <apiProperty key="api.title" value="Camel REST API"/>
+            <apiProperty key="api.description" value="REST DSL サンプル"/>
+            <!-- add end -->
+        </restConfiguration>
+        <!-- rest services under the orders context-path -->
+        <rest path="/books">
+            <description>Books REST service</description>
+            <get id="books-api"
+                outType="io.fabric8.quickstarts.camel.Book"
+                produces="application/json" uri="/">
+                <description>The list of all the books</description>
+                <to uri="sql:select distinct description from orders?dataSource=dataSource&amp;outputClass=io.fabric8.quickstarts.camel.Book"/>
+            </get>
+            <get id="order-api"
+                outType="io.fabric8.quickstarts.camel.Order"
+                produces="application/json" uri="order/{id}">
+                <description>Details of an order by id</description>
+                <to uri="direct:dump"/>
+            </get>
+        </rest>
+        <route id="_route1">
+            <from id="_from1" uri="direct:dump"/>
+            <to id="_to1" uri="sql:select * from orders where id = :#$simple{header.id}?dataSource=dataSource&amp;outputClass=io.fabric8.quickstarts.camel.Order&amp;outputType=SelectOne">
+                <description>clashes with Spring property placeholders, and you should use $simple{} to indicate using the Simple language in Camel. http://camel.apache.org/using-propertyplaceholder.html</description>
+            </to>
+            <to id="_to2" uri="log:test"/>
+        </route>
+    </camelContext>
+</beans>
